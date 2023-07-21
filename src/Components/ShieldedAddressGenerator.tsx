@@ -1,25 +1,42 @@
-import React from "react";
-import { useContext, useState } from "react";
-import ZkClientContext from "../Context/ZkClient";
-export const ShieldedAddressGenerator = () => {
+import React, { useContext, useState } from 'react';
+import ZkClientContext from '../Context/ZkClient';
 
-    const { zkClient } = useContext(ZkClientContext);
-
-    const [address, setAddress] = useState<string | undefined>(undefined);
-
-    const genAddress = async (event: any) => {
-        const _address = await zkClient?.generateAddress();
-        console.log("address: ", _address);
-        setAddress(_address);
-
-    }
-    return <div>
-        {
-            zkClient && <div>
-                <button onClick={genAddress}>Generate Address</button>
-                <p>{address}</p>
-            </div>
-        }
-    </div>
-
+interface ShieldedAddressGenerator {
+  handleButtonClick: () => void;
+  buttonDisabled: boolean;
 }
+
+export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
+  handleButtonClick,
+  buttonDisabled,
+}) => {
+  const { zkClient } = useContext(ZkClientContext);
+  const [address, setAddress] = useState<string | undefined>(undefined);
+
+  const genAddress = async () => {
+    if (!zkClient) return;
+
+    try {
+      handleButtonClick(); // Appeler la fonction parent pour désactiver le bouton
+
+      const _address = await zkClient.generateUniversalAddress();
+      console.log('address: ', _address);
+      setAddress(_address);
+    } catch (error) {
+      console.error('Erreur lors de la génération de l\'adresse :', error);
+    }
+  };
+
+  return (
+    <div>
+      {zkClient && (
+        <div>
+          <button onClick={genAddress} disabled={buttonDisabled} className={buttonDisabled ? 'disabled' : ''}>
+            Generate Address
+          </button>
+          <p>{address}</p>
+        </div>
+      )}
+    </div>
+  );
+};

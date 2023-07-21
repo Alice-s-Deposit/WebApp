@@ -1,38 +1,63 @@
+body {
+  background-color: #111; /* Gris très sombre */
+  color: #fff; /* Couleur de police */
+  font-family: 'Courier New', monospace; /* Police de type machine à écrire */
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100vh; /* Centrer verticalement les éléments */
 }
 
-.App-link {
-  color: #61dafb;
+.App-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.enclosure {
+  border: 2px solid #fff;
+  padding: 30px; /* Augmentation de l'espace intérieur de l'encadré */
+  max-width: 800px; /* Augmentation de la largeur de l'encadré */
+  text-align: center;
+  margin-top: 50px; /* Espace supplémentaire en haut */
+  word-break: break-all; /* Casser les mots pour qu'ils ne dépassent pas de l'encadré */
+  display: flex; /* Utiliser flexbox pour centrer le contenu de l'encadré */
+  flex-direction: column; /* Centrer le bouton et la réponse dans une colonne */
+  align-items: center; /* Centrer le contenu de l'encadré horizontalement */
+}
+
+button {
+  background-color: #007bff; /* Couleur du bouton */
+  color: #fff; /* Couleur du texte du bouton */
+  padding: 15px 30px; /* Ajustement du padding pour centrer le texte */
+  border: none;
+  cursor: pointer;
+  margin: 10px auto 20px; /* Centrer le bouton horizontalement et ajouter de l'espace en bas */
+  font-size: 18px; /* Augmentation de la taille du texte du bouton */
+  border-radius: 5px;
+  width: 180px; /* Largeur fixe pour le bouton */
+  transition: opacity 0.3s ease; /* Transition d'opacité pour l'effet de désactivation */
+  white-space: nowrap; /* Empêcher le texte de se diviser en plusieurs lignes */
+  display: flex; /* Utiliser flexbox pour centrer le texte du bouton */
+  justify-content: center; /* Centrer horizontalement le texte du bouton */
+  align-items: center; /* Centrer verticalement le texte du bouton */
+  margin-bottom: 10px; /* Ajouter une marge en bas du bouton */
+}
+
+button:hover {
+  background-color: #0056b3; /* Couleur du bouton au survol */
+}
+
+button.disabled {
+  opacity: 0.6; /* Opacité réduite pour les boutons désactivés */
+  pointer-events: none; /* Désactiver les événements de souris pour les boutons désactivés */
+}
+
+p {
+  margin: 20px 0; /* Ajouter de l'espace en haut et en bas pour la réponse */
+  font-size: 16px;
 }
