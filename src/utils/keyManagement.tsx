@@ -1,8 +1,14 @@
-import { sha3_512 } from "js-sha3";
+import { sha3_512, keccak256 } from "js-sha3";
 import React, { useState,useContext } from 'react';
 import ZkClientContext from '../Context/ZkClient';
 
 export const localStorageKey = 'privKey';
+// Generator point on the SECP256K1 curve
+const Gx =
+  BigInt('55066263022277343669578718895168534326250603453777594175500187360389116729240');
+const Gy =
+  BigInt('32670510020758816978083085130507043184471273380659243275938904335757337482424');
+const G: [bigint, bigint] = [Gx, Gy];
 
 // return random hex encoded string
 // NOT SECURE. ONLY USED FOR TIME SAVING PURPOSES
@@ -35,6 +41,20 @@ export const getPrivKey = (password: string) => {
     const hashedPassword = "0x" + sha3_512(sha3_512(password));
     // decrypt private key using hashed password
     return "0x" + (encrypted / BigInt(hashedPassword)).toString(16);
+}
+
+// get public key from private key
+export const getPubKey = (privKey: string) => {
+    // get private key as BigInt
+    const privKeyBigInt = BigInt(privKey);
+    // get public key as BigInt
+    const pubKeyBigInt = [privKeyBigInt * BigInt(Gx), privKeyBigInt * BigInt(Gy)];
+
+    // concat x and y
+    const concat_x_y = pubKeyBigInt[0].toString(16) + pubKeyBigInt[1].toString(16).slice(2) as `0x${string}`;
+
+    // hash using keccak256
+    return "0x" + keccak256(concat_x_y).slice(-40);
 }
 
 
