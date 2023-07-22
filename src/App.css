@@ -10,17 +10,21 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh; /* Centrer verticalement les éléments */
-  background: url('background-text.svg') ;
-  animation: slide 20s linear infinite;
+  background: url('background-text.svg') no-repeat center; /* Utiliser 'no-repeat' pour n'afficher qu'une seule fois */
+  background-size: contain; /* Ajuster la taille de l'image */
+  animation: slide 15s linear infinite;
+  animation-timing-function: linear; /* Utiliser 'linear' pour un défilement uniforme */
 }
 
 @keyframes slide {
-  from { background-position: 600 0; }
-  to { background-position: -1000px 0; }
+  from { background-position: 1700px 0; } /* Ajouter 'px' pour spécifier les pixels */
+  to { background-position: -1700px 0; } /* Ajouter 'px' pour spécifier les pixels */
 }
 
+
+
 .App-title {
-  font-size: 24px;
+  font-size: 40px;
   font-weight: bold;
   margin-bottom: 20px;
 }
