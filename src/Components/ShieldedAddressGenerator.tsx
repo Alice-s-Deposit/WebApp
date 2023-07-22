@@ -13,6 +13,7 @@ export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
   const { zkClient } = useContext(ZkClientContext);
   const [address, setAddress] = useState<string | undefined>(undefined);
   const [mnemonic, setMnemonic] = useState<string | undefined>(undefined);
+  const { getMnemonic } = useContext(ZkClientContext);
 
   const genAddress = async () => {
     if (!zkClient) return;
@@ -23,6 +24,9 @@ export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
       const _address = await zkClient.generateUniversalAddress();
       console.log('address: ', _address);
       setAddress(_address);
+      const _mnemonic = getMnemonic();
+
+      setMnemonic(_mnemonic);
     } catch (error) {
       console.error('Erreur lors de la génération de l\'adresse :', error);
     }
@@ -36,7 +40,7 @@ export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
             Generate Address
           </button>
           <p>{address}</p>
-          <p>{mnemonic}</p>
+          {mnemonic && <p><b>Mnemonic:</b> {mnemonic}</p>}
           {address && <p>⚠️ SAVE IT</p>}
         </div>
       )}

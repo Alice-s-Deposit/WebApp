@@ -10,18 +10,22 @@ interface Props {
 
 interface IZkClientContext {
   zkClient: ZkBobClient | undefined,
-  login: undefined | (() => Promise<void>)
+  login: undefined | (() => Promise<void>),
+  getMnemonic: () => string | undefined
 };
 
 const ZkClientContext = createContext<IZkClientContext>({
   zkClient: undefined,
-  login: undefined
+  login: undefined,
+  getMnemonic: () => undefined
 });
 export default ZkClientContext;
 
 interface ZkClientProviderProps {
   children: ReactNode
 }
+
+
 export const ZkClientProvider = (props: ZkClientProviderProps) => {
 
   const [zkClient, setZkClient] = useState<ZkBobClient | undefined>(undefined);
@@ -44,8 +48,11 @@ export const ZkClientProvider = (props: ZkClientProviderProps) => {
     console.log(client)
     setZkClient(client);
   }
+  const getMnemonic = () => {
+    return mnemonic;
+  }
 
-  return <ZkClientContext.Provider value={{ zkClient, login }} >
+  return <ZkClientContext.Provider value={{ zkClient, login, getMnemonic }} >
     {props.children}
   </ZkClientContext.Provider>
 

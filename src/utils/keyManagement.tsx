@@ -1,6 +1,6 @@
 import { sha3_512, keccak256 } from "js-sha3";
 import { useState,useContext } from 'react';
-import ZkClientContext from '../Context/ZkClient';
+
 
 export const localStorageKey = 'privKey';
 // Generator point on the SECP256K1 curve
@@ -89,7 +89,6 @@ export function test(){
 }
 
 export function PasswordInput() {
-    const { zkClient, login } = useContext(ZkClientContext);
     const [password, setPassword] = useState('');
     const [generatedKeys, setGeneratedKeys] = useState({ privateKey: '', publicKey: '' });
   
