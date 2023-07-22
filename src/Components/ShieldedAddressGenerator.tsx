@@ -6,6 +6,8 @@ interface ShieldedAddressGenerator {
   buttonDisabled: boolean;
 }
 
+export const MNEMONIC_KEY = 'mnemonic';
+
 export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
   handleButtonClick,
   buttonDisabled,
@@ -27,6 +29,7 @@ export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
       const _mnemonic = getMnemonic();
 
       setMnemonic(_mnemonic);
+      console.log(_mnemonic);
     } catch (error) {
       console.error('Erreur lors de la génération de l\'adresse :', error);
     }

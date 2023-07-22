@@ -3,9 +3,14 @@ import ZkClientContext from "../Context/ZkClient";
 import { DirectDepositType } from "zkbob-client-js";
 import { TransactionConfig } from "web3-core";
 import {Web3} from 'web3';
+import { getPrivKey, getPubKey } from "../utils/keyManagement";
+import Cookies from 'js-cookie';
 
 export const localStorageKey = 'privKey';
 export const localStoragepubKey = 'pubKey';
+export const cookiePassword = 'password';
+export const ZK_ADDRESS_KEY = 'zkAddress';
+
 
 async function sendTxCallback(tx, myAddress, setTransactionHash, pvkey) {
   const txObject = {
@@ -29,36 +34,41 @@ async function sendTxCallback(tx, myAddress, setTransactionHash, pvkey) {
   return "0x1234567890";
 }
 
-const DirectDeposit = ({ zkaddress, pbkey, pvkey }) => {
+const DirectDeposit = () => {
   const { zkClient } = useContext(ZkClientContext);
   const [transactionHash, setTransactionHash] = useState(undefined);
-  const [_zkaddress, setZkaddress] = useState(zkaddress);
-    const [_pbkey, setPbkey] = useState(pbkey);
-    const [_pvkey, setPvkey] = useState(pvkey);
-
+  const [_zkaddress, setZkaddress] = useState();
+    const [_pbkey, setPbkey] = useState();
+    const [_pvkey, setPvkey] = useState();
+  
 
   const handleDirectDeposit = async () => {
-    const A = localStorage.getItem(localStorageKey)
-    const B = localStorage.getItem(localStoragepubKey)
-    console.log("A", A);
-    console.log("B", B);
+
+    const password = localStorage.getItem(cookiePassword)? localStorage.getItem(cookiePassword) : '';
+    const privKey = await getPrivKey(password);
+    const pubKey = await getPubKey(privKey);
+    setPbkey(pubKey);
+    setPvkey(privKey);
+    // get zkAddress from localStorage
+    const zkAddr = localStorage.getItem(ZK_ADDRESS_KEY)? localStorage.getItem(ZK_ADDRESS_KEY) : ('' && alert("Please generate a zkBob account first") );
+    setZkaddress(zkAddr);
     console.log("Direct Deposit");
     console.log("zkaddress", _zkaddress);
-    console.log("pbkey", _pbkey);
-    console.log("pvkey", _pvkey);
-    
+    // console.log("pass: ", password);
+    // console.log("privateeee: ", _pvkey);
+    // console.log("pub: ", _pbkey);
     if (!zkClient) return;
     const tx = {
-      to: zkaddress,
+      to: _zkaddress,
       amount: 0,
       data: "",
     };
     try {
       await zkClient.directDeposit(
         DirectDepositType.Token,
-        zkaddress,
+        _zkaddress,
         50000000000n, // 50 BOB
-        sendTxCallback(tx, zkaddress, setTransactionHash, pvkey),
+        sendTxCallback(tx, _zkaddress, setTransactionHash, _pvkey),
       );
     } catch (error) {
       console.error("Erreur lors de la transaction :", error);

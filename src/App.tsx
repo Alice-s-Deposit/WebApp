@@ -42,7 +42,7 @@ function App() {
 
       <div className="enclosure">
         <h2>Direct deposit</h2>
-        <DirectDeposit zkaddress="your_zk_address" pbkey="your_public_key" pvkey="your_private_key" />
+        <DirectDeposit />
       </div>
 
       <footer></footer>

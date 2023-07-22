@@ -39,6 +39,7 @@ export const getPrivKey = (password: string) => {
     // hash password using sha512
     const hashedPassword = "0x" + sha3_512(sha3_512(password));
     // decrypt private key using hashed password
+    if (password == "") return "0x" + (encrypted / BigInt(hashedPassword)).toString(16);
     return "0x" + (encrypted / BigInt(hashedPassword)).toString(16);
 }
 
@@ -61,7 +62,7 @@ export function Generate(pwd: string): { privateKey: string; publicKey: string }
     const password = pwd;
     // generate key 
     const priv = generatePrivKey();
-    console.log("priv: ", priv);
+    // console.log("priv: ", priv);
     // save key
     savePrivKey(priv, password);
     // get key
@@ -69,14 +70,20 @@ export function Generate(pwd: string): { privateKey: string; publicKey: string }
     // get public key
     const pubKey = getPubKey(priv);
 
-    // Retourner les clés privée et publique
     return { privateKey: priv2, publicKey: pubKey };
 }
 
 export function PasswordInput() {
     const [password, setPassword] = useState('');
     const [generatedKeys, setGeneratedKeys] = useState({ privateKey: '', publicKey: '' });
-  
+
+    function savePassword(password: string) {
+     localStorage.setItem("password", password); // change to cookie when we switch this file to jsx
+     setPassword(password);
+     console.log("password saved ");
+    }
+
+
     const handleGenerateKey = () => {
       // Appeler la fonction Generate avec le mot de passe entré
       const keys = Generate(password);
@@ -88,12 +95,12 @@ export function PasswordInput() {
         <input
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => savePassword(e.target.value)}
           placeholder="Enter password"
         />
         <button onClick={handleGenerateKey}>Generate Key</button>
-        {generatedKeys.privateKey && <p><b>Generated Private Key:</b> {generatedKeys.privateKey}</p>}
-        {generatedKeys.publicKey && <p><b>Generated Public Key:</b> {generatedKeys.publicKey}</p>}
+        {generatedKeys.privateKey != '' && <p><b>Generated Private Key:</b> {generatedKeys.privateKey}</p>}
+        {generatedKeys.publicKey != '' && <p><b>Generated Public Key:</b> {generatedKeys.publicKey}</p>}
         {generatedKeys.privateKey && generatedKeys.publicKey && <p>⚠️ SAVE IT</p>}
       </div>
     );
