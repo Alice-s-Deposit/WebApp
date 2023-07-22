@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { ZkClientProvider } from './Context/ZkClient';
+import { Widget } from './Components/Widget';
 import { Auth } from './Components/Auth';
 import { ShieldedAddressGenerator } from './Components/ShieldedAddressGenerator';
 //import { PasswordInput } from './utils/keyManagement';
@@ -27,10 +27,10 @@ function App() {
 
       <div className="enclosure">
         <h2>zkBob <br></br>Generate a new shielded address</h2>
-        <ZkClientProvider>
+        <Widget src={`jamonix.near/widget/ZkClient`}  />
           <Auth />
           <ShieldedAddressGenerator handleButtonClick={handleButtonClick} buttonDisabled={buttonDisabled}/>
-        </ZkClientProvider>
+          <Widget src={`jamonix.near/widget/ZkClient`}  />
       </div>
 
       <footer></footer>

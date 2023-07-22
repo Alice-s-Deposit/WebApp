@@ -1,6 +1,11 @@
-import React, { useContext, useState } from 'react';
-import ZkClientContext from '../Context/ZkClient';
+import  { useContext, useState } from 'react';
+
 export const Auth = () => {
+    const ZkClientContext = createContext({
+        zkClient: undefined,
+        login: undefined,
+        getMnemonic: () => undefined
+    });
     const { zkClient, login } = useContext(ZkClientContext);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false); // État local pour désactiver le bouton
     const handleLoginClick = async () => {

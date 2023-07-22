@@ -1,5 +1,4 @@
-import React from 'react';
-export const InfoList = () => {
+
     return (<div className="info-list">
       <ul>
         <li><b>Step 1</b>: Generate <b>ETH burner address</b><br></br>It's saved en encrypted localy with your password.</li>
@@ -12,4 +11,4 @@ export const InfoList = () => {
         <li>⚠️<b>WARNING: TO WITHDRAW FROM ZKBOB GO TO ZKBOB AND COPY PASTE YOUR MNEMONIC</b></li>
       </ul>
     </div>);
-};
+
