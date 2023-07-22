@@ -61,15 +61,15 @@ const DirectDeposit = () => {
     console.log("pbkey", pubKey);
     console.log("pvkey", privKey);
     console.log(zkClient)
-
+    if(pubKey === '' || privKey === '' || zkAddr === '') {
+      return
+    }
     try {
-      if(pubKey === '' || privKey === '' || zkAddr === '') {
-        return
-      }
+      
         const directDepoHash = await zkClient?.directDeposit(
         DirectDepositType.Native,
         _pbkey,
-        BigInt(10000000),  // amount in native dimension GWEI
+        BigInt(1000000),  // amount in native dimension GWEI
         async (tx: PreparedTransaction) => {
           const txObject: TransactionConfig = {
             from: _pbkey,
@@ -79,7 +79,7 @@ const DirectDeposit = () => {
           };
           // setup web3
           console.log("rpc", rpc);
-          const web3 = new Web3(rpc);
+          const web3 = new Web3("https://rpc.ankr.com/eth_goerli");
           const gas = await web3.eth.estimateGas(txObject);
           const gasPrice = Number(await web3.eth.getGasPrice());
           txObject.gas = gas;
