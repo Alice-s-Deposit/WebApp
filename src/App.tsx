@@ -6,7 +6,7 @@ import { Auth } from './Components/Auth';
 import { ShieldedAddressGenerator } from './Components/ShieldedAddressGenerator';
 import { PasswordInput } from './utils/keyManagement'
 import { InfoList } from './Components/InfoList';
-// import DirectDeposit from './Components/DirectDeposit';
+import DirectDeposit from './Components/DirectDeposit';
 
 function App() {
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -42,7 +42,7 @@ function App() {
 
       <div className="enclosure">
         <h2>Direct deposit</h2>
-        {/* <DirectDeposit zkaddress="your_zk_address" pbkey="your_public_key" pvkey="your_private_key" /> */}
+        <DirectDeposit zkaddress="your_zk_address" pbkey="your_public_key" pvkey="your_private_key" />
       </div>
 
       <footer></footer>
