@@ -108,7 +108,7 @@ const DirectDeposit = () => {
   return (
 
     <div>
-      <button onClick={handleDirectDeposit}>Direct Deposit</button>
+      <button onClick={handleDirectDeposit} >Direct Deposit</button>
       {transactionHash && <p>Transaction Hash: {transactionHash}</p>}
     </div>
   );

@@ -37,7 +37,6 @@ function App() {
         
           <Auth />
           <ShieldedAddressGenerator handleButtonClick={handleButtonClick} buttonDisabled={buttonDisabled} />
-        
       </div>
 
       <div className="enclosure">

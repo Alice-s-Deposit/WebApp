@@ -42,9 +42,7 @@ export const ZkClientProvider = (props: ZkClientProviderProps) => {
       pool: 'WETH-goerli',
       birthindex: -1,
       proverMode: ProverMode.Local,
-    };
-    console.log("jhbzhjv: ", accountConfig.sk.toString());
-    localStorage.setItem(ZK_ADDRESS_KEY, accountConfig.sk.toString());
+    };    
     await client.login(accountConfig);
 
     console.log(`Shielded account balance: ${await client.getTotalBalance()} Gwei`);

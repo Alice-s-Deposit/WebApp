@@ -7,6 +7,7 @@ interface ShieldedAddressGenerator {
 }
 
 export const MNEMONIC_KEY = 'mnemonic';
+export const ZK_ADDRESS_KEY = 'zkAddress';
 
 export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
   handleButtonClick,
@@ -16,7 +17,7 @@ export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
   const [address, setAddress] = useState<string | undefined>(undefined);
   const [mnemonic, setMnemonic] = useState<string | undefined>(undefined);
   const { getMnemonic } = useContext(ZkClientContext);
-
+  
   const genAddress = async () => {
     if (!zkClient) return;
 
@@ -24,6 +25,9 @@ export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
       handleButtonClick(); // Appeler la fonction parent pour désactiver le bouton
 
       const _address = await zkClient.generateUniversalAddress();
+      const addressString = _address.toString();
+      const addressWithoutPrefix = addressString.replace(/^zkbob:/, '');
+      localStorage.setItem(ZK_ADDRESS_KEY, addressWithoutPrefix.toString());
       console.log('address: ', _address);
       setAddress(_address);
       const _mnemonic = getMnemonic();
