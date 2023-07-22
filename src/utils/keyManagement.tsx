@@ -59,6 +59,7 @@ export const getPubKey = (privKey: string) => {
 
 
 export function Generate(pwd: string): { privateKey: string; publicKey: string } {
+    console.log("GENERATE PRIVATE KEY");
     const password = pwd;
     // generate key 
     const priv = generatePrivKey();

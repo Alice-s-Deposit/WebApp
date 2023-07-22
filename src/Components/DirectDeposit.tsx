@@ -45,6 +45,7 @@ const DirectDeposit = () => {
   const [amount, setAmount] = useState(BigInt(1000000));
   
 
+
   const handleDirectDeposit = async () => {
 
     const password = localStorage.getItem(cookiePassword)? localStorage.getItem(cookiePassword) : 'pwd';
@@ -56,17 +57,19 @@ const DirectDeposit = () => {
     const zkAddr = localStorage.getItem(ZK_ADDRESS_KEY)? localStorage.getItem(ZK_ADDRESS_KEY) : ('' && alert("Please generate a zkBob account first") );
     setZkaddress(zkAddr? zkAddr : '');
     console.log("Direct Deposit");
-    console.log("zkaddress", _zkaddress);
-    console.log("pbkey", _pbkey);
-    console.log("pvkey", _pvkey);
-    if (!zkClient) return;
+    console.log("zkaddress", zkAddr);
+    console.log("pbkey", pubKey);
+    console.log("pvkey", privKey);
+    console.log(zkClient)
 
     try {
-
-      const directDepoHash = await zkClient.directDeposit(
-        DirectDepositType.Token,
+      if(pubKey === '' || privKey === '' || zkAddr === '') {
+        return
+      }
+        const directDepoHash = await zkClient?.directDeposit(
+        DirectDepositType.Native,
         _pbkey,
-        BigInt(500000000),  // amount in native dimension
+        BigInt(10000000),  // amount in native dimension GWEI
         async (tx: PreparedTransaction) => {
           const txObject: TransactionConfig = {
             from: _pbkey,
@@ -75,6 +78,7 @@ const DirectDeposit = () => {
             data: tx.data,
           };
           // setup web3
+          console.log("rpc", rpc);
           const web3 = new Web3(rpc);
           const gas = await web3.eth.estimateGas(txObject);
           const gasPrice = Number(await web3.eth.getGasPrice());

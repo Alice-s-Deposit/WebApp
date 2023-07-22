@@ -31,19 +31,20 @@ function App() {
       <h2>Generate a new burner ETH address</h2>
         <PasswordInput />
       </div>
-
+      <ZkClientProvider>
       <div className="enclosure">
         <h2>zkBob <br></br>Generate a new shielded address</h2>
-        <ZkClientProvider>
+        
           <Auth />
           <ShieldedAddressGenerator handleButtonClick={handleButtonClick} buttonDisabled={buttonDisabled} />
-        </ZkClientProvider>
+        
       </div>
 
       <div className="enclosure">
         <h2>Direct deposit</h2>
         <DirectDeposit />
       </div>
+      </ZkClientProvider>
 
       <footer></footer>
     </div>
