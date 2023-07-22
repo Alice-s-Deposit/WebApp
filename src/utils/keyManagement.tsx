@@ -73,21 +73,6 @@ export function Generate(pwd: string): { privateKey: string; publicKey: string }
     return { privateKey: priv2, publicKey: pubKey };
 }
 
-export function test(){
-    const password = "test";
-    // generate key
-    const priv = generatePrivKey();
-    console.log("priv: ", priv);
-    // save key
-    savePrivKey(priv, password);
-    // get key
-    const priv2 = getPrivKey(password);
-    console.log("priv2: ", priv2);
-    // get public key
-    const pub = getPubKey(priv2);
-    console.log("pub: ", pub);
-}
-
 export function PasswordInput() {
     const [password, setPassword] = useState('');
     const [generatedKeys, setGeneratedKeys] = useState({ privateKey: '', publicKey: '' });

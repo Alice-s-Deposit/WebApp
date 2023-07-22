@@ -4,6 +4,8 @@ import { DirectDepositType } from "zkbob-client-js";
 import { TransactionConfig } from "web3-core";
 import {Web3} from 'web3';
 
+export const localStorageKey = 'privKey';
+export const localStoragepubKey = 'pubKey';
 
 async function sendTxCallback(tx, myAddress, setTransactionHash, pvkey) {
   const txObject = {
@@ -30,8 +32,21 @@ async function sendTxCallback(tx, myAddress, setTransactionHash, pvkey) {
 const DirectDeposit = ({ zkaddress, pbkey, pvkey }) => {
   const { zkClient } = useContext(ZkClientContext);
   const [transactionHash, setTransactionHash] = useState(undefined);
+  const [_zkaddress, setZkaddress] = useState(zkaddress);
+    const [_pbkey, setPbkey] = useState(pbkey);
+    const [_pvkey, setPvkey] = useState(pvkey);
+
 
   const handleDirectDeposit = async () => {
+    const A = localStorage.getItem(localStorageKey)
+    const B = localStorage.getItem(localStoragepubKey)
+    console.log("A", A);
+    console.log("B", B);
+    console.log("Direct Deposit");
+    console.log("zkaddress", _zkaddress);
+    console.log("pbkey", _pbkey);
+    console.log("pvkey", _pvkey);
+    
     if (!zkClient) return;
     const tx = {
       to: zkaddress,
@@ -51,6 +66,7 @@ const DirectDeposit = ({ zkaddress, pbkey, pvkey }) => {
   };
 
   return (
+
     <div>
       <button onClick={handleDirectDeposit}>Direct Deposit</button>
       {transactionHash && <p>Transaction Hash: {transactionHash}</p>}
