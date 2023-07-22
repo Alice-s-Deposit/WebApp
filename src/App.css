@@ -9,7 +9,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Centrer verticalement les éléments */
+  height: auto; /* Centrer verticalement les éléments */
   background: url('background-text.svg') no-repeat center; /* Utiliser 'no-repeat' pour n'afficher qu'une seule fois */
   background-size: contain; /* Ajuster la taille de l'image */
   animation: slide 15s linear infinite;
@@ -33,7 +33,8 @@ body {
 .enclosure {
   border: 2px solid #fff;
   padding: 30px; /* Augmentation de l'espace intérieur de l'encadré */
-  max-width: 800px; /* Augmentation de la largeur de l'encadré */
+  max-width: 80%; /* Augmentation de la largeur de l'encadré */
+  width: 80%;
   text-align: center;
   margin-top: 50px; /* Espace supplémentaire en haut */
   word-break: break-all; /* Casser les mots pour qu'ils ne dépassent pas de l'encadré */
@@ -58,6 +59,7 @@ button {
   justify-content: center; /* Centrer horizontalement le texte du bouton */
   align-items: center; /* Centrer verticalement le texte du bouton */
   margin-bottom: 10px; /* Ajouter une marge en bas du bouton */
+  width: auto; /* Ajuster la largeur du bouton en fonction de la longueur du texte */
 }
 
 button:hover {
@@ -72,4 +74,46 @@ button.disabled {
 p {
   margin: 20px 0; /* Ajouter de l'espace en haut et en bas pour la réponse */
   font-size: 16px;
+}
+
+h2 {
+  margin-top: 5px; /* Supprimer la marge en haut pour le titre */
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px 15px; /* Ajustement du padding pour centrer le texte */
+  font-size: 16px; /* Taille de la police */
+  border: 1px solid #fff; /* Bordure avec couleur blanche */
+  border-radius: 5px; /* Bordures arrondies */
+  color: #fff; /* Couleur du texte */
+  background-color: transparent; /* Fond transparent */
+  outline: none; /* Supprimer l'outline au focus */
+  margin-bottom: 10px; /* Ajouter de l'espace en bas de l'input */
+  width: auto; /* Largeur de l'input pour occuper tout l'espace disponible */
+}
+
+footer {
+  margin-bottom: 100px;
+}
+
+.info-list {
+  background-color: #f0f0f0; /* Couleur de fond du composant */
+  color: #333; /* Couleur du texte */
+  font-family: 'Courier New', monospace; /* Police de type machine à écrire */
+  padding: 20px; /* Espacement intérieur pour le contenu du composant */
+  border: 2px solid #ccc; /* Bordure du composant */
+  border-radius: 5px; /* Coins arrondis de la bordure */
+  width: auto;
+}
+
+.info-list ul {
+  list-style-type: none; /* Supprimer les puces de la liste */
+  padding: 0;
+  margin: 0;
+}
+
+.info-list li {
+  margin-bottom: 10px; /* Espacement entre les éléments de la liste */
+  font-size: 16px; /* Taille de la police des éléments de la liste */
 }
