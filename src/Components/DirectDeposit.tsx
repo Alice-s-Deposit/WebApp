@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ZkClientContext from "../Context/ZkClient";
 import { DirectDepositType } from "zkbob-client-js";
 import { TransactionConfig } from "web3-core";
@@ -26,10 +26,19 @@ const DirectDeposit = () => {
   const [_zkaddress, setZkaddress] = useState('');
   const [_pbkey, setPbkey] = useState('');
   const [_pvkey, setPvkey] = useState('');
-  const [amount, setAmount] = useState(BigInt(1000000));
   const [isTransactionPending, setIsTransactionPending] = useState(false);
 
-
+  useEffect(() => {
+    const zkAddr = localStorage.getItem(ZK_ADDRESS_KEY)? localStorage.getItem(ZK_ADDRESS_KEY) : '';
+    setZkaddress(zkAddr? zkAddr : '');
+    const password = localStorage.getItem(cookiePassword)? localStorage.getItem(cookiePassword) : 'pwd';
+    const privKey = password? localStorage.getItem(localStorageKey) : '';
+    const pubKey = password? localStorage.getItem(localStoragepubKey) : '';
+    setPbkey(pubKey? pubKey : '');
+    setPvkey(privKey? privKey : '');
+    
+  }, []);
+  
   const handleDirectDeposit = async () => {
 
     await setIsTransactionPending(true);
@@ -52,7 +61,7 @@ const DirectDeposit = () => {
       return;
     }
     try {
-      
+        
         const directDepoHash = await zkClient?.directDeposit(
         DirectDepositType.Native,
         _pbkey,
@@ -87,6 +96,7 @@ const DirectDeposit = () => {
     catch (error) {
       console.error('Error:', error);
       await setIsTransactionPending(false);
+      
     }
     
   };
