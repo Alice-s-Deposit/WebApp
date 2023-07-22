@@ -15,7 +15,7 @@ export const config:ClientConfig = {
     },
     chains: {
       '5': {
-        rpcUrls: ['https://rpc.ankr.com/eth_goerli'] // list of available JSON RPC endpoints
+        rpcUrls: ['https://eth-goerli.g.alchemy.com/v2/JiPS-7d-H7eNED9MUOBK5Z78Nk63WWPE'] // list of available JSON RPC endpoints
       },
     },
     snarkParams: {
