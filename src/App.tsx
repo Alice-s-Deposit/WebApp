@@ -22,6 +22,10 @@ function App() {
     setButtonDisabled(false);
   };
 
+  const redirectToURL = () => {
+    window.open("https://staging--zkbob.netlify.app/", "_blank");
+  };
+
   return (
     <div className="App">
       <div className="App-title">Cypher Deposit</div>
@@ -44,7 +48,10 @@ function App() {
         <DirectDeposit />
       </div>
       </ZkClientProvider>
-
+      <div className="enclosure">
+        <h2>Direct deposit</h2>
+        <button onClick={redirectToURL}>Go on zkBob to withraw your funds</button>
+      </div>
       <footer></footer>
     </div>
      );

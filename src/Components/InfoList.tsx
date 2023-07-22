@@ -11,7 +11,7 @@ export const InfoList = () => {
         <li><b>Step 3</b>: Send funds to burner address (ETH only)</li>
         <li>⚠️<b>WARNING: do not connect the address to an RPC that is not yours or that is not routed.</b></li>
         <li><b>Step 4</b>: Direct deposit</li>
-        <li>⚠️<b>WARNING: TO WITHDRAW FROM ZKBOB GO TO ZKBOB AND COPY PASTE YOUR MNEMONIC</b></li>
+        <li><b>Step 5: to witdhraw your funds go on zkBob platform and import a zkAccount : past the generated mnemonic.</b></li>
       </ul>
     </div>
   );
