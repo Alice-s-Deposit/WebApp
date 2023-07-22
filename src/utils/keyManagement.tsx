@@ -1,6 +1,6 @@
 import { sha3_512, keccak256 } from "js-sha3";
 import { useState,useContext } from 'react';
-
+import { ethers } from "ethers";
 
 export const localStorageKey = 'privKey';
 // Generator point on the SECP256K1 curve
@@ -45,16 +45,8 @@ export const getPrivKey = (password: string) => {
 
 // get public key from private key
 export const getPubKey = (privKey: string) => {
-    // get private key as BigInt
-    const privKeyBigInt = BigInt(privKey);
-    // get public key as BigInt
-    const pubKeyBigInt = [privKeyBigInt * BigInt(Gx), privKeyBigInt * BigInt(Gy)];
-
-    // concat x and y
-    const concat_x_y = pubKeyBigInt[0].toString(16) + pubKeyBigInt[1].toString(16).slice(2) as `0x${string}`;
-
-    // hash using keccak256
-    return "0x" + keccak256(concat_x_y).slice(-40);
+  const wallet = new ethers.Wallet(privKey);
+  return wallet.address;
 }
 
 
