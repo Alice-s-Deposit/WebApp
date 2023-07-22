@@ -1,5 +1,5 @@
 import { sha3_512, keccak256 } from "js-sha3";
-import React, { useState,useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import ZkClientContext from '../Context/ZkClient';
 
 export const localStorageKey = 'privKey';
@@ -58,7 +58,7 @@ export const getPubKey = (privKey: string) => {
 }
 
 
-export function Generate(pwd: string){
+export function Generate(pwd: string): { privateKey: string; publicKey: string } {
     const password = pwd;
     // generate key 
     const priv = generatePrivKey();
@@ -67,19 +67,23 @@ export function Generate(pwd: string){
     savePrivKey(priv, password);
     // get key
     const priv2 = getPrivKey(password);
-    return priv2;
+    // get public key
+    const pubKey = getPubKey(priv);
+
+    // Retourner les clés privée et publique
+    return { privateKey: priv2, publicKey: pubKey };
 }
 
 
 export function PasswordInput() {
     const { zkClient, login } = useContext(ZkClientContext);
     const [password, setPassword] = useState('');
-    const [generatedKey, setGeneratedKey] = useState('');
+    const [generatedKeys, setGeneratedKeys] = useState({ privateKey: '', publicKey: '' });
   
     const handleGenerateKey = () => {
       // Appeler la fonction Generate avec le mot de passe entré
-      const privKey = Generate(password);
-      setGeneratedKey(privKey);
+      const keys = Generate(password);
+      setGeneratedKeys(keys);
     };
   
     return (
@@ -91,7 +95,9 @@ export function PasswordInput() {
           placeholder="Enter password"
         />
         <button onClick={handleGenerateKey}>Generate Key</button>
-        {generatedKey && <p>Generated Key: {generatedKey}</p>}
+        {generatedKeys.privateKey && <p><b>Generated Private Key:</b> {generatedKeys.privateKey}</p>}
+        {generatedKeys.publicKey && <p><b>Generated Public Key:</b> {generatedKeys.publicKey}</p>}
+        {generatedKeys.privateKey && generatedKeys.publicKey && <p>⚠️ SAVE IT</p>}
       </div>
     );
-  }
+}

@@ -28,10 +28,10 @@ function App() {
       <InfoList />
       
       <div className="enclosure">
-      <h2>Generate a new ETH Vanity address</h2>
+      <h2>Generate a new burner ETH address</h2>
         <PasswordInput />
       </div>
-      
+
       <div className="enclosure">
         <h2>zkBob <br></br>Generate a new shielded address</h2>
         <ZkClientProvider>

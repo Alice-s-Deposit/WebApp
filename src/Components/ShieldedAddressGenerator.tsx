@@ -12,6 +12,7 @@ export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
 }) => {
   const { zkClient } = useContext(ZkClientContext);
   const [address, setAddress] = useState<string | undefined>(undefined);
+  const [mnemonic, setMnemonic] = useState<string | undefined>(undefined);
 
   const genAddress = async () => {
     if (!zkClient) return;
@@ -35,6 +36,8 @@ export const ShieldedAddressGenerator: React.FC<ShieldedAddressGenerator> = ({
             Generate Address
           </button>
           <p>{address}</p>
+          <p>{mnemonic}</p>
+          {address && <p>⚠️ SAVE IT</p>}
         </div>
       )}
     </div>
