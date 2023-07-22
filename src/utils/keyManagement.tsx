@@ -1,5 +1,5 @@
 import { sha3_512, keccak256 } from "js-sha3";
-import React, { useState, useContext } from 'react';
+import { useState,useContext } from 'react';
 import ZkClientContext from '../Context/ZkClient';
 
 export const localStorageKey = 'privKey';
@@ -10,17 +10,16 @@ const Gy =
   BigInt('32670510020758816978083085130507043184471273380659243275938904335757337482424');
 const G: [bigint, bigint] = [Gx, Gy];
 
-// return random hex encoded string
+// returns a random private key
 // NOT SECURE. ONLY USED FOR TIME SAVING PURPOSES
 export function generatePrivKey(): string {
-    return ("0x1" +
-        Math.floor(Math.random())
-        .toString(16)
-        + Math.random().toString(16).substring(2) 
-        + Math.random().toString(16).substring(2)
-        + Math.random().toString(16).substring(2)
-        + Math.random().toString(16).substring(2)
-    );
+  const length: number = 64;
+  const key: string = [...Array(length)]
+    .map(() => {
+      return Math.floor(Math.random() * 16).toString(16);
+    })
+    .join("");
+  return "0x" + key;
 }
 
 export const savePrivKey = (privKey: string, password: string) => {
@@ -74,6 +73,20 @@ export function Generate(pwd: string): { privateKey: string; publicKey: string }
     return { privateKey: priv2, publicKey: pubKey };
 }
 
+export function test(){
+    const password = "test";
+    // generate key
+    const priv = generatePrivKey();
+    console.log("priv: ", priv);
+    // save key
+    savePrivKey(priv, password);
+    // get key
+    const priv2 = getPrivKey(password);
+    console.log("priv2: ", priv2);
+    // get public key
+    const pub = getPubKey(priv2);
+    console.log("pub: ", pub);
+}
 
 export function PasswordInput() {
     const { zkClient, login } = useContext(ZkClientContext);

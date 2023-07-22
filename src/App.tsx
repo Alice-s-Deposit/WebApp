@@ -9,7 +9,6 @@ import { InfoList } from './Components/InfoList';
 
 function App() {
   const [buttonDisabled, setButtonDisabled] = useState(false);
-
   const handleButtonClick = async () => {
     // Désactiver le bouton au clic
     setButtonDisabled(true);
