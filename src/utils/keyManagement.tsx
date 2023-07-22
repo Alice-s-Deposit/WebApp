@@ -1,5 +1,6 @@
 import { sha3_512 } from "js-sha3";
-
+import React, { useState,useContext } from 'react';
+import ZkClientContext from '../Context/ZkClient';
 
 export const localStorageKey = 'privKey';
 
@@ -37,8 +38,8 @@ export const getPrivKey = (password: string) => {
 }
 
 
-export function test(){
-    const password = "password";
+export function Generate(pwd: string){
+    const password = pwd;
     // generate key 
     const priv = generatePrivKey();
     console.log("priv: ", priv);
@@ -46,7 +47,31 @@ export function test(){
     savePrivKey(priv, password);
     // get key
     const priv2 = getPrivKey(password);
-    console.log("priv2: ", priv2);
-
-    console.log(priv === priv2);
+    return priv2;
 }
+
+
+export function PasswordInput() {
+    const { zkClient, login } = useContext(ZkClientContext);
+    const [password, setPassword] = useState('');
+    const [generatedKey, setGeneratedKey] = useState('');
+  
+    const handleGenerateKey = () => {
+      // Appeler la fonction Generate avec le mot de passe entré
+      const privKey = Generate(password);
+      setGeneratedKey(privKey);
+    };
+  
+    return (
+      <div>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter password"
+        />
+        <button onClick={handleGenerateKey}>Generate Key</button>
+        {generatedKey && <p>Generated Key: {generatedKey}</p>}
+      </div>
+    );
+  }

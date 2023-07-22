@@ -4,9 +4,9 @@ import { ZkBobClient, TxType } from 'zkbob-client-js';
 import { ZkClientProvider } from './Context/ZkClient';
 import { Auth } from './Components/Auth';
 import { ShieldedAddressGenerator } from './Components/ShieldedAddressGenerator';
-import { test } from './utils/keyManagement';
+import { PasswordInput } from './utils/keyManagement'
+
 function App() {
-  test();
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const handleButtonClick = async () => {
@@ -25,10 +25,15 @@ function App() {
     <div className="App">
       <div className="App-title">Cypher Deposit</div>
       <div className="enclosure">
+        <h2>zkBob <br></br>Generate a new shielded address</h2>
         <ZkClientProvider>
           <Auth />
           <ShieldedAddressGenerator handleButtonClick={handleButtonClick} buttonDisabled={buttonDisabled} />
         </ZkClientProvider>
+      </div>
+      <div className="enclosure">
+      <h2>Generate a new ETH Vanity address</h2>
+        <PasswordInput />
       </div>
     </div>
   );
