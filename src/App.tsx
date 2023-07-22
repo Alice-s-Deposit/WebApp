@@ -4,8 +4,9 @@ import { ZkBobClient, TxType } from 'zkbob-client-js';
 import { ZkClientProvider } from './Context/ZkClient';
 import { Auth } from './Components/Auth';
 import { ShieldedAddressGenerator } from './Components/ShieldedAddressGenerator';
-
+import { test } from './utils/keyManagement';
 function App() {
+  test();
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const handleButtonClick = async () => {
