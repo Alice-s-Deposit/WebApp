@@ -2,19 +2,20 @@ import { ClientConfig, DepositType } from "zkbob-client-js";
 
 export const config:ClientConfig = {
     pools: {
-      'BOB-sepolia': {
-        'chainId': 11155111,
-        'poolAddress': '0x3bd088C19960A8B5d72E4e01847791BD0DD1C9E6',
-        'tokenAddress': '0x2C74B18e2f84B78ac67428d0c7a9898515f0c46f',
-        'relayerUrls': ['https://relayer.thgkjlr.website/'],
+      'WETH-goerli': {
+        'chainId': 5,
+        'poolAddress': '0xf9dbCF4005497e042838dE9082C817fCa790e945',
+        'tokenAddress': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
+        'relayerUrls': ['https://goerli-weth-relayer.thgkjlr.website'],
         'delegatedProverUrls': [],
         'coldStorageConfigPath': '',
+        'isNative': true,
         'depositScheme':DepositType.PermitV2
       }
     },
     chains: {
-      '11155111': {
-        rpcUrls: ['https://rpc.sepolia.org'] // list of available JSON RPC endpoints
+      '5': {
+        rpcUrls: ['https://rpc.ankr.com/eth_goerli'] // list of available JSON RPC endpoints
       },
     },
     snarkParams: {
