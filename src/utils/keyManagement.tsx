@@ -78,6 +78,7 @@ export function PasswordInput() {
 
 
     const handleGenerateKey = () => {
+      if(password == '') return alert("Please enter a password first")
       // Appeler la fonction Generate avec le mot de passe entré
       const keys = Generate(password);
       setGeneratedKeys(keys);
