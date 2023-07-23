@@ -49,7 +49,7 @@ function App() {
       </div>
       </ZkClientProvider>
       <div className="enclosure">
-        <h2>Direct deposit</h2>
+        <h2>Withdraw - Export</h2>
         <button onClick={redirectToURL}>Go on zkBob to withraw your funds</button>
         <p>⚠️<b>We recommande for your own privacy to wait for several hours/days before withdrawing your funds.</b></p>
       </div>

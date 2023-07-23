@@ -38,6 +38,8 @@ const DirectDeposit = () => {
     setPvkey(privKey? privKey : '');
     
   }, []);
+
+  
   
   const handleDirectDeposit = async () => {
 
@@ -55,6 +57,21 @@ const DirectDeposit = () => {
     console.log("pbkey", pubKey);
     console.log("pvkey", privKey);
     console.log(zkClient)
+    // setup web3
+    console.log("rpc", rpc);
+    const web3 = new Web3("https://rpc.ankr.com/eth_goerli");
+    const balance = await web3.eth.getBalance("0x52bc44d5378309EE2abF1539BF71dE1b7d7bE3b5", function(err, result) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(web3.utils.fromWei(result, "ether") + " ETH")
+        return result;
+      }
+    })
+    const gasPriceWei = await web3.eth.getGasPrice();
+    const valueInWei = BigInt(balance) - BigInt(gasPriceWei)*BigInt(21000);
+    const valueInGwei = await BigInt( web3.utils.fromWei(valueInWei.toString(), 'gwei'));
+    
     if(pubKey == '' || privKey === '' || zkAddr === '') {
       await setIsTransactionPending(false);
       console.log("vide");
@@ -65,7 +82,7 @@ const DirectDeposit = () => {
         const directDepoHash = await zkClient?.directDeposit(
         DirectDepositType.Native,
         _pbkey,
-        BigInt(1000000),  // amount in native dimension GWEI
+        valueInGwei,  // amount in native dimension GWEI
         async (tx: PreparedTransaction) => {
           const txObject: TransactionConfig = {
             from: _pbkey,
@@ -73,10 +90,9 @@ const DirectDeposit = () => {
             value: tx.amount.toString(),
             data: tx.data,
           };
-          // setup web3
-          console.log("rpc", rpc);
-          const web3 = new Web3("https://rpc.ankr.com/eth_goerli");
           const gas = await web3.eth.estimateGas(txObject);
+
+          
           const gasPrice = Number(await web3.eth.getGasPrice());
           txObject.gas = gas;
           txObject.gasPrice = `0x${BigInt(gasPrice).toString(16)}`;
