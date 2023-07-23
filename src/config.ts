@@ -1,5 +1,5 @@
 import { ClientConfig, DepositType } from "zkbob-client-js";
-
+const api_key = "your quicknode apiKey"
 export const config:ClientConfig = {
     pools: {
       'WETH-goerli': {
@@ -15,7 +15,7 @@ export const config:ClientConfig = {
     },
     chains: {
       '5': {
-        rpcUrls: ['https://eth-goerli.g.alchemy.com/v2/JiPS-7d-H7eNED9MUOBK5Z78Nk63WWPE'] // list of available JSON RPC endpoints
+        rpcUrls: ['https://side-red-layer.ethereum-goerli.discover.quiknode.pro/' + api_key + '/'] // list of available JSON RPC endpoints
       },
     },
     snarkParams: {
