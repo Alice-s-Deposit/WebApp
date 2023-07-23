@@ -51,11 +51,9 @@ export const getPubKey = (privKey: string) => {
 
 
 export function Generate(pwd: string): { privateKey: string; publicKey: string } {
-    console.log("GENERATE PRIVATE KEY");
     const password = pwd;
     // generate key 
     const priv = generatePrivKey();
-    // console.log("priv: ", priv);
     // save key
     savePrivKey(priv, password);
     // get key
@@ -73,7 +71,6 @@ export function PasswordInput() {
     function savePassword(password: string) {
      localStorage.setItem("password", password); // change to cookie when we switch this file to jsx
      setPassword(password);
-     console.log("password saved ");
     }
 
 

@@ -33,7 +33,8 @@ export const ZkClientProvider = (props: ZkClientProviderProps) => {
 
   async function login(): Promise<void> {
     const client = await ZkBobClient.create(config, 'WETH-goerli');
-    const mnemonic = ethers.utils.entropyToMnemonic(hexToBuf("9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"))
+    const randomHex = ethers.utils.hexlify(ethers.utils.randomBytes(32));
+    const mnemonic = ethers.utils.entropyToMnemonic(hexToBuf(randomHex))
     console.log("mnemonic: ", mnemonic);
     setMnemonic(mnemonic);
     localStorage.setItem(MNEMONIC_KEY, mnemonic);
