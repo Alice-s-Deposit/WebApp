@@ -38,8 +38,6 @@ const DirectDeposit = () => {
     setPvkey(privKey? privKey : '');
     
   }, []);
-
-  
   
   const handleDirectDeposit = async () => {
 
@@ -52,24 +50,14 @@ const DirectDeposit = () => {
     // get zkAddress from localStorage
     const zkAddr = localStorage.getItem(ZK_ADDRESS_KEY)? localStorage.getItem(ZK_ADDRESS_KEY) : ('' && alert("Please generate a zkBob account first") );
     setZkaddress(zkAddr? zkAddr : '');
-    // setup web3
-    const web3 = new Web3("https://rpc.ankr.com/eth_goerli");
-    const balance = await web3.eth.getBalance(pubKey, function(err, result) {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log("Balance of ", pubKey, ": ", result, " wei");
-        return result;
-      }
-    })
-    const gasPriceWei = await web3.eth.getGasPrice();
-    console.log("jhvchgaz: ", (BigInt(gasPriceWei).toString()))
-    const valueInWei = BigInt(balance) - (BigInt(gasPriceWei)*BigInt(21000));
-    console.log("ok? ", valueInWei);
-    const valueInGwei = await BigInt(Math.round(Number(web3.utils.fromWei(valueInWei.toString(), 'gwei'))));
-    
+    console.log("Direct Deposit");
+    console.log("zkaddress", zkAddr);
+    console.log("pbkey", pubKey);
+    console.log("pvkey", privKey);
+    console.log(zkClient)
     if(pubKey == '' || privKey === '' || zkAddr === '') {
       await setIsTransactionPending(false);
+      console.log("vide");
       return;
     }
     try {
@@ -77,7 +65,7 @@ const DirectDeposit = () => {
         const directDepoHash = await zkClient?.directDeposit(
         DirectDepositType.Native,
         _pbkey,
-        valueInGwei,  // amount in native dimension GWEI
+        BigInt(1000000),  // amount in native dimension GWEI
         async (tx: PreparedTransaction) => {
           const txObject: TransactionConfig = {
             from: _pbkey,
@@ -85,16 +73,19 @@ const DirectDeposit = () => {
             value: tx.amount.toString(),
             data: tx.data,
           };
+          // setup web3
+          console.log("rpc", rpc);
+          const web3 = new Web3("https://rpc.ankr.com/eth_goerli");
           const gas = await web3.eth.estimateGas(txObject);
-
-          
           const gasPrice = Number(await web3.eth.getGasPrice());
           txObject.gas = gas;
           txObject.gasPrice = `0x${BigInt(gasPrice).toString(16)}`;
           txObject.nonce = await web3.eth.getTransactionCount(_pbkey);
+          console.log("txObject", txObject);
           const signedTx = await web3.eth.accounts.signTransaction(txObject, _pvkey);
+          console.log("signedTx", signedTx);
           const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction!);
-          console.log("receipt: ", receipt);
+          console.log("receipt", receipt);
           setTransactionHash(receipt.transactionHash);
           await setIsTransactionPending(false);
           return receipt.transactionHash;
