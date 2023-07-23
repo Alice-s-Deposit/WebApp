@@ -1,6 +1,11 @@
-# Getting Started with Create React App
+# Web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Installing packages
+
+To install the different packages needed to run the app, run : 
+
+### `npm install --force`
+The --force tag is required because the SDK and dependencies used are unstable for the moment.   
 
 ## Available Scripts
 
@@ -39,9 +44,35 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## **Structure**📏
+
+**1. Main page**
+
+In this page, all the workflow to withdraw from cex is explained. Your connection to RPC will go througth an HOPR RPCh to avoid any leak of your IP address. 
+
+Here are the different steps : 
+- Step 1: Generate ETH burner address. It's saved en encrypted localy with your password.
+- ⚠️WARNING: COPY AND SAVE THE PUBLIC & PRIVATE KEY
+- Step 2: Login & Generate a shielded address, zkBOB address
+- ⚠️WARNING: IMPERATIVELY COPY THE MNEMONIC SEED
+- Step 3: Send funds to burner address (ETH only)
+- Step 4: Direct deposit
+- Step 5: to withdraw your funds go on zkBob platform and import a zkAccount : past the generated mnemonic.
+
+## Technology 💻
+
+- [React](https://reactjs.org/)
+- [zkBob ](https://www.zkbob.com/)
+- [HOPR HRPc](https://rpch.net)
+
+## Supported networks 🛰️
+
+Testnet (live) : 
+* Goerli
+
+## A huge thanks to the ZK-BOB team, always a pleasure to hack with you !
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-# zkbob_web_app
